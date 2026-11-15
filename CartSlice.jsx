@@ -8,10 +8,12 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // Add a new product, or increase its quantity if it is already in the cart.
     addItem: (state, action) => {
       const product = action.payload;
-      const existingItem = state.items.find((item) => item.id === product.id);
+      if (!product || product.id === undefined) return;
 
+      const existingItem = state.items.find((item) => item.id === product.id);
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
@@ -19,22 +21,30 @@ const cartSlice = createSlice({
       }
     },
 
+    // Remove one product completely from the cart.
     removeItem: (state, action) => {
       const productId =
-        typeof action.payload === "object" ? action.payload.id : action.payload;
+        action.payload && typeof action.payload === "object"
+          ? action.payload.id
+          : action.payload;
+
       state.items = state.items.filter((item) => item.id !== productId);
     },
 
+    // Set a product quantity. A quantity of zero or less removes the product.
     updateQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const item = state.items.find((product) => product.id === id);
+      const { id, productId, quantity, change } = action.payload || {};
+      const targetId = id !== undefined ? id : productId;
+      const item = state.items.find((product) => product.id === targetId);
+      if (!item) return;
 
-      if (item) {
-        if (quantity <= 0) {
-          state.items = state.items.filter((product) => product.id !== id);
-        } else {
-          item.quantity = quantity;
-        }
+      const nextQuantity =
+        quantity !== undefined ? Number(quantity) : item.quantity + Number(change || 0);
+
+      if (!Number.isFinite(nextQuantity) || nextQuantity <= 0) {
+        state.items = state.items.filter((product) => product.id !== targetId);
+      } else {
+        item.quantity = Math.floor(nextQuantity);
       }
     }
   }
