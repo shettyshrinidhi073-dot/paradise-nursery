@@ -1,4 +1,4 @@
-/* Paradise Nursery landing page styles */
+/* Paradise Nursery landing page and About Us styles */
 
 :root {
   --green-dark: #24543b;
@@ -18,8 +18,73 @@ body {
   background: var(--cream);
 }
 
+.app-container {
+  min-height: 100vh;
+}
+
+.nursery-home {
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem;
+  color: #fff;
+  text-align: center;
+  background:
+    linear-gradient(rgba(18, 48, 31, 0.58), rgba(18, 48, 31, 0.68)),
+    url("https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=1800&q=85")
+      center / cover no-repeat;
+}
+
+.nursery-home__content {
+  width: min(100%, 780px);
+}
+
+.nursery-home__eyebrow {
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.nursery-home h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+}
+
+.nursery-home p:not(.nursery-home__eyebrow) {
+  max-width: 650px;
+  margin: 0 auto 1.8rem;
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.nursery-home button,
+.back-to-home {
+  border: 0;
+  border-radius: 6px;
+  padding: 0.9rem 1.6rem;
+  background: #f6f4e9;
+  color: var(--green-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nursery-home button:hover,
+.back-to-home:hover {
+  background: #dce9d9;
+}
+
+.back-to-home {
+  margin: 1.5rem;
+  background: var(--green-dark);
+  color: #fff;
+}
+
 .about-us {
-  min-height: 70vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,4 +117,20 @@ body {
 .about-us p {
   line-height: 1.7;
   font-size: 1.05rem;
+}
+
+@media (max-width: 600px) {
+  .nursery-home {
+    min-height: 70vh;
+    padding: 3.5rem 1.25rem;
+  }
+
+  .nursery-home h1 {
+    font-size: 2.7rem;
+  }
+
+  .about-us {
+    min-height: auto;
+    padding: 3.5rem 1.25rem;
+  }
 }
